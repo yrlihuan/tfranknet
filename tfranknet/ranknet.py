@@ -239,7 +239,7 @@ class RankNet(BaseEstimator):
             s1 = self._obtain_score(data1, weights, biases, act_func, "1")
             s2 = self._obtain_score(data2, weights, biases, act_func, "2")
             with tf.name_scope("cost"):
-                sum_cost = tf.reduce_sum(tf.log(1 + tf.exp(-sigma*(s1-s2))))
+                sum_cost = tf.reduce_sum(tf.log(1 + tf.exp(-tf.nn.sigmoid(s1-s2))))
                 self.cost = cost = sum_cost / batch_size
         self.optimize = optimizer(lr).minimize(cost)
 
